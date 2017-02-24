@@ -1,0 +1,98 @@
+<template name="showActivity">
+    <div class="row margin-top">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{{ pictures.[0] }}" alt="...">
+                    <div class="carousel-caption welcome">
+                        <h1>{{ name }}</h1><br/>
+                        <i class="fa fa-{{imgHeart}} fa-2x"></i>
+                        <p>{{likersCount}}</p>
+                        {{#if currentUser }}
+                            <div class='like'>{{buttonLike}}</div> {{/if }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='row bg-desc'>
+
+        <div class='col-md-6'>
+            <h2 class='description-activity'>Description</h2>
+            <p class='text-description'>{{ description }}</p>
+            <p class='text-center' style='font-size:1.2em;'>Click <a target="_blank" href='{{ url }}'>here</a> to
+                visit the website !</p>
+
+        </div>
+
+    <div class='col-md-6'>
+        {{#if currentUser}}
+
+            <h2 class='text-center'>Add a comment</h2>
+            <form class='formAddComment' action="traitement/verif.php" method="post"><br/>
+                    <textarea name="commentText" rows="2" placeholder="What's on your mind ?" class='status-box'
+                              required></textarea><br/>
+                <div class="button-group">
+                    <p class="counter">140</p>
+                    <a href="#" class="btn btn-primary">Post</a>
+                </div>
+            </form>
+        {{/if}}
+
+    </div>
+
+    </div>
+
+
+    <div class='row'>
+        <div class='col-md-6 box-description'>
+            {{#each picture in pictures }}
+                <div class='box-photo'>
+                    <a href="{{ picture }}">
+                        <img src="{{ picture }}" alt="picture_activity" class="resize">
+                    </a>
+                </div>
+
+            {{/each }}
+        </div>
+        {{>addPicture}}
+
+
+        <div class='col-md-6'>
+            <div>
+                <h2 class='text-center'>Comments:</h2>
+                <div class='allComment'>
+                    {{#each comment in comments}}
+                        <p class='text-comment'>{{comment.text}}</p>
+                        <p class='date-comment'>{{comment.date}}</p>
+                        <p class='nameComment'>by {{comment.user.email}}</p>
+                        <div class='separator'></div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</template>
+
+<template name="addPicture">
+    {{#if currentUser}}
+        <div class="addPicture">
+
+            <div class="form-group">
+
+                <div class="button-group pull-right">
+
+                    <p class="open btn btn-primary">UPLOAD</p>
+                    {{> upload_semanticUI multiple = true }}
+
+                </div>
+
+            </div>
+        </div>
+    {{/if}}
+</template>

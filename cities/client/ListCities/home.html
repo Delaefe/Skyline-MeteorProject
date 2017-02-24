@@ -1,0 +1,180 @@
+<template name='home'>
+	<div class='container-fluid'>
+
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		 
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner">
+		    <div class="item active">
+		      <img src="/banner.jpg" alt="...">
+		      <div class="carousel-caption welcome">
+		          <h1>Welcome to the website !</h1><br />
+		      </div>
+		    </div>
+            {{#each city in cities}}
+                <div class="item">
+                  <img src="{{ city.picture }}" alt="...">
+                  <div class="carousel-caption">
+                      <h2> {{ city.name }} </h2>
+                      <p> {{ city.description }} </p>
+                      <div class='button-view'><a href="/city/{{city._id}}" class='see-this-city'>I want to see this city !</a></div>
+                  </div>
+                </div>               
+            {{/each }}
+		  </div>
+		 
+		  <!-- Controls -->
+		  	<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    		<span class="glyphicon glyphicon-chevron-left"></span>
+	  		</a>
+	  		<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    		<span class="glyphicon glyphicon-chevron-right"></span>
+	  		</a>
+		</div>
+
+		{{> listCities }}
+		{{> addCity }}
+
+	</div>
+</template>
+
+<template name='listCities'>
+	<div class='row list-cities'>
+
+		<h1 class='all-cities-title'>Last cities</h1>
+
+			<ul class='all-cities'>
+			{{ #each city in cities }}
+		        <li class='each-city'>
+		            <div class='picture-each-city'>
+                    {{#if deleteBy city}}
+                        <i id="{{ city._id }}" class="fa fa-times fa-2x delete_city"></i>
+                    {{ /if }}
+		                <a href="/city/{{city._id}}"><img src='{{ city.picture }}' alt='photo' class='profil-photo'></a>                    
+		            </div>
+		            <div class='title-city'>
+		                <h3 class='name-city'>{{ city.name }}</h3>
+		                <div class='button-view'><a href="/city/{{city._id}}" class='view-city'>See more</a></div>
+                        {{#if deleteBy city}}
+                            <div class='button-view'>
+                                <a href="/updateCity/{{city._id}}" class='updateCity'>Update</a>
+                            </div>
+                        {{/if}}
+		            </div>
+		        </li>
+			{{ /each }}
+			</ul>
+			
+	</div>
+</template>
+
+<template name="addCity">
+
+    <div id='addCity' class="addCity_form">
+        {{#if currentUser}}
+            <h2 class='text-center'>Add a new city!</h2>
+
+            <div class="form-group">
+                <form>
+                    <div class='row'>
+                        <div class='col-md-offset-2 col-md-4'>
+                            <input type="text" name="cityName" id='cityName' required pattern="[a-zA-Z][a-zA-Z\s]*" placeholder="Name"><br/>
+
+                            <input type="text" name="cityCountry" required pattern="[a-zA-Z]+"
+                                   placeholder="Country"><br/>
+
+                            <input type="text" name="cityRegion" required pattern="[a-zA-Z]+" placeholder="Region"><br/>
+
+                            <input class='mid-input' type="text" name="cityLong" required pattern="-?\d{1,3}\.\d+"
+                                   placeholder="Altitude Coordinate">
+                            <input class='mid-input' type="text" name="cityLat" required pattern="-?\d{1,3}\.\d+"
+                                   placeholder="Longitude Coordinate"><br/>
+                        </div>
+
+                        <div class='col-md-4'>
+                            <input type="text" name="citySize" required pattern="[-+]?[0-9]*[.,]?[0-9]+"
+                                   placeholder="Size"><br/>
+
+                            <input type="text" name="cityPopulation" required pattern="[0-9]+"
+                                   placeholder="Population"><br/>
+
+                            <textarea rows="4" name="cityDescription" placeholder="Add a description of your city."></textarea>
+                            <br/>
+
+                            <label>Don't forget a nice picture!</label>
+                            <div class="uploadImages">
+                                {{> upload_bootstrap multiple=false }}
+                            </div>
+                        </div>
+                    </div><br />
+
+                    <div class='row'>
+                        <input class='send btn-submit' type="submit" value="Add City">
+                    </div>
+
+                </form>
+            </div>
+
+        {{/if}}
+    </div>
+</template>
+
+<template name="updateCity">
+    {{#if author this.createdBy}}
+        <div class="updateCity_form" style='margin-top : 53px;'>
+            <h1 class='all-cities-title'>Update your city</h1>
+            {{#if currentUser}}
+
+                <div class="form-group">
+
+                    <form id="cityUpdate">
+                        <div class='row'>
+                            <div class='col-md-offset-2 col-md-4'>
+                                <input type="text" value="{{this.country}}" name="cityCountry" id="cityCountry" required
+                                       pattern="[a-zA-Z]+"
+                                       placeholder="Country"><br/>
+
+                                <input type="text" value="{{this.region}}" name="cityRegion" id="cityRegion" required
+                                       pattern="[a-zA-Z]+"
+                                       placeholder="Region"><br/>
+
+                                <input class='mid-input' type="text" value="{{this.coordinates.long}}" name="cityLong" id="cityLong" required
+                                       pattern="-?\d{1,3}\.\d+"
+                                       placeholder="Altitude Coordinate">
+                                <input class='mid-input' type="text" value="{{this.coordinates.lat}}" name="cityLat" id="cityLat" required
+                                       pattern="-?\d{1,3}\.\d+"
+                                       placeholder="Longitude Coordinate"><br/>
+
+                                <input type="text" value="{{this.size}}" name="citySize" id="citySize" required
+                                       pattern="[-+]?[0-9]*[.,]?[0-9]+"
+                                       placeholder="Size"><br/>
+                            </div>
+
+                            <div class='col-md-4'>
+                                <input type="text" value="{{this.population}}" name="cityPopulation" id="cityPopulation"
+                                       required
+                                       pattern="[0-9]+"
+                                       placeholder="Population"><br/>
+
+                                <textarea rows="4" value="{{this.description}}" name="cityDescription" id="cityDescription"
+                                      placeholder="Add a description of your city."></textarea>
+                                <br/>
+
+                                {{> upload_bootstrap}}
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <input type="submit" class="btn-submit send" value="Update City">
+                        </div>
+
+
+                    </form>
+                </div>
+
+            {{/if}}
+        </div>
+
+    {{/if}}
+
+</template>

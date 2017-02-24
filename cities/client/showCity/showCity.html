@@ -1,0 +1,40 @@
+<template name='city'>
+	<div style='margin-top:53px;'>
+		<div style="background-image:url('{{picture}}')" id="banniere" class="col-md-12">
+			<div id="filtre_banniere" class="col-md-12">
+				<h1>{{name}}</h1>
+			</div>
+		</div>
+
+		<div class='row'>
+			<div class='col-md-8'>
+				<h2 class='text-center'>Description</h2><br />
+				<p>{{description}}</p>
+			</div>
+
+			<div class='col-md-4'>
+				<h2 class="text-center">Informations</h2><br />
+				<p>Population : {{population}}</p>
+				<p>Size : {{size}}</p>
+				<p>Country : {{country}}</p>
+				<p>Region : {{region}}</p>
+			</div>
+		</div>
+
+		<div class='row all-acitivities'>
+			{{> listActivities }}
+		</div>
+
+		<div class='row map-full-width'>
+			<div class='col-md-12 map-container'>
+				{{> googleMap name="city_map" options=city_map_option}}
+			</div>
+		</div>
+
+
+
+		{{> addActivity }}
+
+<!-- 		{{> addComment }} -->
+	</div>
+</template>

@@ -1,0 +1,428 @@
+if (Meteor.isServer) {
+    Meteor.methods({
+        // reset database
+        reset: function () {
+            var derek = {
+                "_id": "u0",
+                "createdAt": new Date("2016-02-04T09:28:14.187Z"),
+                "services": {
+                    "password": {
+                        "bcrypt": "$2a$10$5J/u4IF59xW8Xi73eQajzu5rnF2bcvXaKKQaye.Njh3knctvLnuf6" // derek.ie
+                    },
+                    "resume": {
+                        "loginTokens": []
+                    }
+                },
+                "emails": [{
+                    "address": "derek@dkit.ie",
+                    "verified": false
+                }
+                ]
+            };
+            var dimas = {
+                "_id": "u1",
+                "createdAt": new Date("2016-02-04T09:29:14.662Z"),
+                "services": {
+                    "password": {
+                        "bcrypt": "$2a$10$PtpfLpKrWd3/AbQz1CCL6ubnHpWd2D.QVvQSJLoL.WPKpQjZCGIi." //gilles.fr
+                    },
+                    "resume": {
+                        "loginTokens": []
+                    }
+                },
+                "emails": [{
+                    "address": "dimas@dkit.ie",
+                    "verified": false
+                }
+                ]
+            };
+            Meteor.users.remove({});
+            Meteor.users.insert(derek);
+            Meteor.users.insert(dimas);
+
+            // *** activities
+            var museum = {
+                _id: "c0a0",
+                name: "Galway's City Museum",
+                cityID: "c0",
+                nature: "place",
+                createdBy: "u1",
+                url: "http://www.galwaycitymuseum.ie/",
+                startDate: "",
+                endDate: "",
+                pictures: ["/images/Galway/Museum.jpg"],
+                comments: [],
+                likers: [],
+                description: "Situated behind the famous Spanish Arch, Galway City Museum houses exhibitions which explore aspects of the history and heritage of Galway City, focusing on the medieval town, the Claddagh village & Galway, 1800-1950. In addition, the Museum mounts temporary exhibitions & hosts a variety of exhibits from other museums, galleries & special interest groups. The building itself affords spectacular views of the Claddagh, the Spanish Arch, the River Corrib & Galway Bay",
+            };
+            var cathedral = {
+                _id: "c0a1",
+                name: "Galway's Cathedral",
+                cityID: "c0",
+                nature: "place",
+                createdBy: "u1",
+                url: "http://www.galwaycathedral.ie/",
+                startDate: "",
+                endDate: "",
+                pictures: ["/images/Galway/Galway_Cathedral.jpg"],
+                likers: [],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "great"
+                }],
+                description: "Located on Nun's Island, on the west bank of the River Corrib near Salmon Weir Bridge, Galway Cathedral is one of the largest and most dominating buildings in Galway. Construction of the Cathedral began in 1958 and was completed in 1965. It is located on the site of the former city jail and features a dome at a height of 145ft. It was the last large church in Ireland to be made from stone, and features a huge octagonal dome that complements the skyline of the City of Galway. Inside the visitor will find the rose windows and wall paintings, which echo the broad tradition of Christian art, particularly impressive"
+            };
+            var arch = {
+                _id: "c0a4",
+                name: "Spanish Arch",
+                cityID: "c0",
+                nature: "place",
+                createdBy: "u1",
+                url: "http://www.galwaytourism.ie/pThe-Spanish-Arch.html",
+                startDate: "",
+                endDate: "",
+                pictures: ["/images/Galway/Galway-Arch.jpg"],
+                likers: [],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "great"
+                }],
+                description: "Galway's famous Spanish Arch is located on the left bank of the Corrib, where Galway's river meets the sea. The Spanish Arch was originally a 16th century bastion, which was added to Galway's town walls to protect merchant ships from looting. At this time, it was known as Ceann an Bhalla (Head of the Wall). Its current name 'Spanish Arch' refers to former merchant trade with Spain, whose galleons often docked here. In 1755, the arches were partially destroyed by the tidal wave generated by the 1755 Lisbon earthquake. In recent times part of the Arch has been converted into the Galway City Museum."
+            };
+            var wildefest = {
+                _id: "c0a9",
+                name: "Oscar Wilde Festival",
+                cityID: "c0",
+                nature: "event",
+                createdBy: "u1",
+                url: "www.oscarwildefestival.com/",
+                startDate: new Date('2016-9-15'),
+                endDate: new Date('2016-9-17'),
+                pictures: ["/images/Galway/wilde.jpg"],
+                likers: [],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "Awful music"
+                }],
+                description: "A festival dedicated to Oscar Wilde will take place in Galway in September to showcase Wilde in a west of Ireland setting. Not much is widely known of the huge influence the west of Ireland had on him and his family. The festival aims to educate and entertain people about Wilde and leave a lasting impression in their minds long after the festival is over.  "
+            };
+
+
+            var foodfestival = {
+                _id: "c0a2",
+                name: "Galway's Food Festival",
+                cityID: "c0",
+                nature: "event",
+                createdBy: "u1",
+                url: "www.galwayfoodfestival.com",
+                startDate: new Date('2016-3-24'),
+                endDate: new Date('2016-3-28'),
+                pictures: ["/images/Galway/foodfest.jpg"],
+                likers: [],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "Awful music"
+                }],
+                description: "The Galway Food Festival 2016 will be held over the Easter Bank Holiday Weekend from Thursday 24 to Monday 28 March 2016. Enjoy 5 days of exceptional food and loads of free events suitable for all the family. The festival celebrates Galway as a good food destination with a strong focus on artisan, seasonal and local produce.  "
+            };
+            var artsfestival = {
+                _id: "c0a3",
+                name: "Galway Arts Festival",
+                cityID: "c0",
+                nature: "event",
+                createdBy: "u1",
+                pictures: ["/images/Galway/Art.jpg"],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+
+                    date: new Date(),
+                    text: "Awful music"
+                }],
+                url: "www.giaf.ie/",
+                startDate: new Date('2016-7-11'),
+                endDate: new Date('2016-7-24'),
+                description: "The Galway International Arts Festival is Ireland's largest annual arts festival, taking place in 2016 from 11th - 24th July in the city of Galway. Founded in 1978, the Festival collaborates with artists and companies throughout the world to produce and present an international programme of theatre, spectacle, dance, visual arts, music, literature & comedy involving hundreds of artists and performers.",
+                likers: [],
+
+            };
+
+
+            var conservatory = {
+                _id: "c3a0",
+                name: "National Conservatory of Annecy",
+                nature: "place",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/Conservatoire.jpg", "/images/Annecy/Conservatoire_2.jpg", "/images/Annecy/Conservatoire_3.jpg"],
+
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this festival !"
+                }],
+                description: "",
+                likers: []
+            };
+
+            var lakeFestival = {
+                _id: "c3a1",
+                name: "Lake Festival",
+                nature: "place",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/fete/fete1.jpg", "/images/Annecy/fete/fete2.jpg", "/images/Annecy/3.jpg"],
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this festival !"
+                }],
+                description: "",
+                likers: []
+            };
+
+
+            var semnoz = {
+                _id: "c3a2",
+                name: "Semnoz",
+                nature: "place",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/Semnoz_1.jpg", "/images/Annecy/Semnoz_2.jpg", "/images/Annecy/Semnoz_3.jpg"],
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this festival !"
+                }],
+                description: "",
+                likers: []
+            };
+
+
+            var lakeAnnecy = {
+                _id: "c3a3",
+                name: "Annecy's Lake",
+                nature: "place",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/Lac_dannecy.jpg", "/images/Annecy/Lac_dannecy2.jpg", "/images/Annecy/Lac_dannecy3.jpg"],
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this festival !"
+                }],
+                description: "",
+                likers: []
+            };
+
+
+            var animate = {
+                _id: "c3a4",
+                name: "The International Festival of Animated Film in Annecy",
+                nature: "event",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/anima/anima1.jpg", "/images/Annecy/anima/anima2.jpg", "/images/Annecy/anima/anima3.jpg"],
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this festival !"
+                }],
+                description: "The International Festival of Animated Film in Annecy , created in 1960, takes place in early June in the town of Annecy in the Haute -Savoie. First every other year , the festival became annual in 1997. The Festival offers an official selection with a panel of animated films using various techniques: animation, paper cut , dough, stop motion , 3D ... Filed in categories : Feature films Short films Movies and TV control Movies graduation This festival is an important event of the moving image . Alongside the competition are held world premieres , retrospectives , tributes , meetings around the film and authors, book signings , exhibitions , outdoor projections every night on the Pâquier In the 60s, the existence on the territory of a Savoyard active film club, combined with the meeting of its leaders with the team of the Film Days, facilitated the installation of the International Animated cinema (JICA) in Annecy. Pierre Barbin, Andre Martin and Michel Boschet are the founding members. In 1956, leaders of the film club are in Cannes to attend the first edition of JICA in the margins of the great festival. The days of animation organized during the Cannes Film Festival did not work: movie stars monopolized public attention and journalistes.De the meeting of the two teams germ the idea of installing a festival of Annecy1 animation. In 1968, the festival, like many others this year, is interrupted by the events of May2. In 1971, discussions between the organizers and ASIFA (International Animated Film Association) concern the method of selecting présentés3 films. Until 1975, the Festival experienced a sharp increase in participation, both among professionals, foreign delegations, subscribers and viewers. The arrival of the first images made using the computer creates a split between conventional and more modern artists. In the late 70s, it is clear that we must turn to the future, change orientation2. En 1982, trois objectifs sont présentés à l'Assemblée Générale : 'contribuer au développement du cinéma d'animation; assurer à Annecy une manifestation culturelle de niveau international, être un moyen d'action culturelle pour la ville, la région et la France'. Jean-Luc Xiberras est engagé pour mettre en place ces nouvelles orientations. Le secrétariat permanent est ramené de Paris à Annecy2. En 1983, l'édition se tient au centre culturel de Bonlieu, permettant ainsi des projections simultanées, dans différents formats de films et sur différents supports. En parallèle, les prémices d'un marché du film apparaissent, ainsi que quelques conférences thématiques. Cette édition, en s'ouvrant à toutes les fonctions du cinéma d'animation, à toutes les cultures et techniques, se révèlent être un véritable succès. À la suite de l'ouverture de la compétition aux films de commande en 1983, une compétition est également créée pour les films de télévision en 19852. En 1985, la première édition du Marché international du film d'animation (MIFA) est ainsi concomitamment, avec un rôle complémentaire. Les studios américains deviennent de plus en plus visibles sur la manifestation, avec notamment une diffusion auprès du public d'un programme de 9 films de Disney oscarisés, avec un hommage à la Warner en 1987, et avec l'accueil d'une délégation importante de Walt Disney Pictures pour la première fois en 1989. Entre 1983 et 1997, le nombre de participants passe de 900 accrédités en 1983 à 4300 en 1997 et le nombre de films reçus de 386 à 1271. These factors lead to media coverage increasingly significant with nearly 300 journalists in the late 90s early as 1983, the success of the event increases the number of cultural or professional économique2 orientation . In 1993, a giant outdoor screen is installed on the Pâquier for public screenings . In 1997, the Board of Directors vote annualization of the event for several reasons : increased production volume, difficulty selection, competition from other events, require annual market and need for ongoing organizing team . Subsequently, Annecy consolidated its position as leading international competitive festival dedicated to animation . In the 2000s , the Annecy festival is in full swing, previews multiply and thus lead to greater media coverage of the event. France and Europe are embarking on the production of animated films. In 2006 is created the CITIA , the city of the moving image . His project articulated around three axes ( culture, economy, education) , various actions are implemented at local level: permanent exhibition on animation, development of arts education operations , implementation of higher education with Gobelins school of image, creating an event dedicated to content and new media , the Forum Blanc, establishment of a fund to support the production of digital works , etc.",
+                url: "http://en.lac-annecy.com/lake-festival-annecy-131.htm",
+                likers: []
+            };
+
+
+            var marathon = {
+                _id: "c3a5",
+                name: "Marathon",
+                nature: "event",
+                createdBy: "u1",
+
+                pictures: ["/images/Annecy/marathon/marathon1.jpg", "/images/Annecy/marathon/marathon2.jpg", "/images/Annecy/marathon/marathon3.jpg"],
+                comments: [{
+                    user: {
+                        _id: derek._id,
+                        email: derek.emails[0].address
+                    },
+                    date: new Date(),
+                    text: "I like this marathon !"
+                }],
+                description: "Lake Annecy Marathon is a marathon at the start and finish in Annecy running on the west bank of Lake Annecy . This is one of the oldest marathons with that of Paris . Some 8500 participants are running in the marathon , half marathon , Nordic walking and youth races. The event has the FFA international label in addition to the National FFA",
+                url: "http://en.lac-annecy.com/lake-festival-annecy-131.htm",
+                likers: []
+            };
+
+
+            Activities.remove({});
+            Activities.insert(museum);
+            Activities.insert(arch);
+            Activities.insert(cathedral);
+            Activities.insert(foodfestival);
+            Activities.insert(artsfestival);
+            Activities.insert(wildefest);
+
+            Activities.insert(conservatory);
+            Activities.insert(semnoz);
+            Activities.insert(lakeAnnecy);
+            Activities.insert(animate);
+            Activities.insert(marathon);
+
+
+            // **** cities
+            var galway = {
+                _id: "c0",
+                name: 'Galway',
+                createdBy: "u1",
+
+                country: 'Ireland',
+                region: 'Connacht',
+                coordinates: {
+                    long: "53.271944",
+                    lat: "-9.048889"
+                },
+                size: "53",
+                population: "75530",
+                description: "Galway is a city in the West of Ireland in the province of Connacht.  It is the fourth most populous urban area in the Republic of Ireland and the sixth most populous city in the island of Ireland." +
+                " Galway has a bohemian flavour that is typical of the west of Ireland psyche: laid back, relaxed and ready for a party!" + "The past lingers in the air here. Traces of old Galway, including the city walls and the distinctive Spanish Arch, give the city an ancient atmosphere. Follow the salty air that breezes through the winding lanes to traditional shops and pavement cafés. Shaped by its status as an important seaport, you'll find plenty of seafood on the menus.",
+                picture: '/images/Galway/Galway-slider.jpg',
+                activities: [{
+                    _id: museum._id,
+                    createdBy: "u1",
+
+                    name: museum.name,
+                    nature: museum.nature,
+                    picture: museum.pictures[0]
+                }, {
+                    _id: cathedral._id,
+                    name: cathedral.name,
+                    createdBy: "u1",
+
+                    nature: cathedral.nature,
+                    picture: cathedral.pictures[0]
+                }, {
+                    _id: foodfestival._id,
+                    name: foodfestival.name,
+                    createdBy: "u1",
+
+                    nature: foodfestival.nature,
+                    picture: foodfestival.pictures[0]
+                },
+                    {
+                        _id: artsfestival._id,
+                        name: artsfestival.name,
+                        createdBy: "u1",
+
+                        nature: artsfestival.nature,
+                        picture: artsfestival.pictures[0]
+                    },
+                    {
+                        _id: arch._id,
+                        createdBy: "u1",
+
+                        name: arch.name,
+                        nature: arch.nature,
+                        picture: arch.pictures[0]
+                    },
+                    {
+                        _id: wildefest._id,
+                        createdBy: "u1",
+
+                        name: wildefest.name,
+                        nature: wildefest.nature,
+                        picture: wildefest.pictures[0]
+                    }]
+            };
+
+
+            var annecy = {
+                _id: "c2",
+                name: 'Annecy',
+                coordinates: {
+                    long: "6.129384",
+                    lat: "45.899247"
+                },
+                population: "50 254",
+                description: "Annecy (French pronunciation: [an.si]; Arpitan: Èneci or Ènneci) is the greatest city of Haute-Savoie department in the Auvergne-Rhône-Alpes region in south-eastern France. It lies on the northern tip of Lake Annecy, 35 kilometers (22 mi) south of Geneva.Nicknamed Pearl of French Alps in Raoul Blanchard's monography describing its location between lake and mountains, the city controls the northern entrance to the lake gorge. Due to the lack of available land, its resident population stagnates with 52 029 inhabitants intramural in 2013. However, its urban area, with 221 000 inhabitants, is on the 5th regional position, just behind Geneva-Annemasse urban area, which counts 292 000 inhabitants, in the northern department. Switching from counts of Geneva's dwelling in the 13th century, to counts of Savoy's in the 14th century, the city became the capital of the Savoy province in 1434 during the prerogative of Genevois-Nemours until 1659. Its role increased in 1536, during the Calvinist Reformation of Geneva, while the bishop took refuge in Annecy. St Francis de Sales gave Annecy its role of advanced citadel of the Catholic Counter-Reformation. The annexation of Savoy will link the city to France in 1860. Sometimes called Venice of the Alps, this idyllic and touristic representation comes from its two canals and the river Thiou lying through the old city and whose initial role was to protect the city and to empower its handicrafts. The city experienced an industrial development in the 19th century with silk manufacturing. Some of its industrial legacy remains today within the head offices of NTN-SNR bearings, Salomon, Entremont or Dassault Aviation. Since the end of the 19th century, Annecy developed a tourist strength with the proximity of his lake, some winter resorts and the renovation of its castle inaugurated with the opening of its fine art museum in 1956. The municipal environmental policy managed to keep 40.3% 2 of green area and the city and has been rewarded by the 'golden flower' in 2015 given to the 9 most-flowered French cities. Annecy plays a cultural and event role, since 1960 being the organiser of the  Animation Film International Festival hosted by the Bonlieu cultural centre. It eventually became growing educational center since  the establishment of the University of Savoy in 1973.",
+
+                picture: '/images/Annecy/annecy.jpg',
+                activities: [{
+                    _id: animate._id,
+                    name: animate.name,
+                    nature: animate.nature,
+                    picture: animate.pictures[0]
+                }, {
+                    _id: marathon._id,
+                    name: marathon.name,
+                    nature: marathon.nature,
+                    picture: marathon.pictures[0]
+                }, {
+                    _id: lakeFestival._id,
+                    name: lakeFestival.name,
+                    nature: lakeFestival.nature,
+                    picture: lakeFestival.pictures[0]
+
+                }, {
+                    _id: lakeAnnecy._id,
+                    name: lakeAnnecy.name,
+                    nature: lakeAnnecy.nature,
+                    picture: lakeAnnecy.pictures[0]
+                }, {
+                    _id: semnoz._id,
+                    name: semnoz.name,
+                    nature: semnoz.nature,
+                    picture: semnoz.pictures[0]
+                }, {
+                    _id: conservatory._id,
+                    name: conservatory.name,
+                    nature: conservatory.nature,
+                    picture: conservatory.pictures[0]
+                }]
+            };
+            Cities.remove({});
+
+            Cities.insert(galway);
+            Cities.insert(annecy);
+
+        }
+    })
+}

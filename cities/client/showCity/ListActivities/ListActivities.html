@@ -1,0 +1,100 @@
+<template name="listActivities">
+    <div class='row'>
+        <div class='col-md-12'>
+            <ul class='all_activity'>
+                <h1>Places</h1>
+                {{#each activity in activities}}
+                    {{ #if naturePlace activity }}
+                        <li class="each_activity">
+                            <div class='picture_each_activity'>
+                                {{ #if delAcBy activity }}
+                                <i id="{{ activity._id }}" class="delete_activity fa fa-times fa-2x"></i>
+                                {{ /if }}
+                                <a href="/activity/{{activity._id}}"><img src="{{activity.picture}}" alt="event picture" class="profil-photo"></a>
+                            </div>
+                            <div class="title_activity">
+                                <h3 class="name_activity">{{activity.name}}</h3>
+                                <div class='button-view'><a href="/activity/{{activity._id}}" class='view_activity'>See more</a></div>
+                            </div>
+                        </li>
+                    {{ /if }}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-md-12'>
+            <ul class='all_activity'>
+                <h1 id='events'>Events</h1>
+                {{#each activity in activities}}
+                    {{ #if natureEvents activity }}
+                        <li class="each_activity">
+                            <div class='picture_each_activity'>
+                                {{ #if delAcBy activity }}
+                                <i id="{{ activity._id }}" class="delete_activity fa fa-times fa-2x"></i>
+                                {{ /if }}
+                                <a href="/activity/{{activity._id}}"><img src="{{activity.picture}}" alt="event picture" class="profil-photo"></a>
+                            </div>
+                            <div class="title_activity">
+                                <h3 class="name_activity">{{activity.name}}</h3>
+                                <div class='button-view'><a href="/activity/{{activity._id}}" class='view_activity'>See more</a></div>
+                            </div>
+                        </li>
+                    {{ /if }}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+</template>
+
+<template name="addActivity">
+
+    {{#if currentUser}}
+        <div class="addActivity_form">
+            <h2 class='text-center'>Add an activity to {{this.name}}</h2>
+
+
+            <div class="form-group">
+
+                <form>
+
+                <div class='row'>
+                    <div class='col-md-offset-2 col-md-4'>
+                        <input type="text" name="activityName" id="activityName" class='activityName' required placeholder="Name"><br/>
+
+                        <input type="text" name="activityURL" placeholder="Website for the activity"><br/>
+                    </div>
+
+                    <div class='col-md-4'>
+                        <textarea rows="4" name="activityDescription"
+                              placeholder="Add a description of your activity." required></textarea> <br/>
+
+                        <select name="activityNature" class="nature" required>
+                            <option value="">Choose nature</option>
+                            <option value="event" class="event ">Event</option>
+                            <option value="place" class="place ">Place</option>
+                        </select><br/>
+
+                    <div class="chooseDate">
+                        <input class='mid-input' type="date" name="activityStart" placeholder="Start">
+                        <input class='mid-input' type="date" name="activityEnd" placeholder="End"><br/>
+
+                    </div>
+                    {{> upload_bootstrap multiple=true }}
+                    </div>
+                </div>
+
+
+                    <input type="submit" class="btn-submit send" value="Add Activity">
+
+
+                </form>
+            </div>
+        </div>
+    {{/if}}
+
+
+</template>
+

@@ -1,0 +1,34 @@
+<template name='myAccount'>
+
+<div class='container-fluid' style='margin-top: 53px;'>
+	<h1 class='all-cities-title'>My Cities</h1>
+
+	<ul class='all-cities'>
+	{{ #each city in cities }}
+		{{#if mycities city}}
+	        <li class='each-city'>
+	            <div class='picture-each-city'>
+                {{#if deleteBy city}}
+                    <i id="{{ city._id }}" class="fa fa-times fa-2x delete_city"></i>
+                {{ /if }}
+	                <a href="/city/{{city._id}}"><img src='{{ city.picture }}' alt='photo' class='profil-photo'></a>                    
+	            </div>
+	            <div class='title-city'>
+	                <h3 class='name-city'>{{ city.name }}</h3>
+	                <div class='button-view'><a href="/city/{{city._id}}" class='view-city'>See more</a></div>
+                    {{#if author city.createdBy}}
+                        <div class='button-view'>
+                            <a href="/updateCity/{{city._id}}" class='updateCity'>Update</a>
+                        </div>
+                    {{/if}}
+	            </div>
+	        </li>
+        {{/if}}
+	{{ /each }}
+	</ul>
+
+
+</div>
+			 
+
+</template>
